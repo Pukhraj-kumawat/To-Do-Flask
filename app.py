@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/<id>')
 def home(id):
-    return render_template('home.html',data='Pukhraj')
+    return render_template('home.html',data='Pukhrajj')
  
 print(os.environ.get('SECRET_KEY'))
 
