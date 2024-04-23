@@ -1,1 +1,29 @@
-<h1>This is home page {{data}}</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To-Do List</title>
+
+<link rel="stylesheet" href="/static/css/home.css">
+
+</head>
+<body>
+
+<div class="todo-container">
+    <div>
+        <form action="/add-toDo" method="POST">
+            <h2>To-Do-List</h2>
+            <input type="text" placeholder="Add new task" name="todo-input" required>
+            <input type="submit" value="Add">
+        </form>
+    </div>
+</div>
+
+<script>
+    
+    
+</script>
+
+</body>
+</html>
