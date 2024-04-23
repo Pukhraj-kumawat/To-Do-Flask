@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>To-Do List</title>
-
-<link rel="stylesheet" href="/static/css/home.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="/static/css/home.css">
 </head>
 <body>
 
@@ -17,13 +15,37 @@
             <input type="text" placeholder="Add new task" name="todo-input" required>
             <input type="submit" value="Add">
         </form>
+        <div class="tododiv">
+            <ul class="ul">
+                {% for toDo in todos %}
+                    <li> 
+                        
+                            <span>{{ toDo.toDo }}</span>                        
+                            <br><br>
+                            <div class="todo-actions">
+                                
+                                    <button class="edit-button {{ toDo.id }}" onclick="editClicked('{{ toDo._id}}','{{toDo.toDo}}')">Edit</button>
+                                                                 
+                                    <form action="/delete-toDo" method="POST">
+                                        <input type="hidden" value="{{toDo._id}}" name="toDoId">
+                                        <button class="delete-button" type="submit">Delete</button>                                
+                                    </form>
+                                
+                            </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <div class="edit-div">
+                
+            </div>
+
+        </div>
     </div>
 </div>
 
-<script>
-    
-    
-</script>
+<script src="/static/js/home.js"></script>
+
 
 </body>
 </html>

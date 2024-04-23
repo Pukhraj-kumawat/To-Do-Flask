@@ -1,0 +1,66 @@
+.todo-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.todo-container form {
+    margin-bottom: 10px;
+}
+
+.todo-container h2 {
+    margin-bottom: 10px;
+}
+
+.todo-container input[type="text"] {
+    width: 70%;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+.todo-container input[type="submit"],
+.todo-container button {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.todo-container input[type="submit"].btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+}
+
+.todo-container button.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+}
+
+.delete-button {
+    color: rgb(251, 86, 86);
+}
+.edit-button{
+    color: blue;
+}
+
+.todo-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.todo-container li {
+    background-color: #f4f4f4;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+.todo-container .todo-actions {
+    display: flex;
+}
+
+.todo-container .todo-actions form {
+    margin-right: 5px;
+}

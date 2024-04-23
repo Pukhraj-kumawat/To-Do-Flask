@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 import os,jwt
 from pymongo import MongoClient
 import hashlib
+from bson.objectid import ObjectId
+
 
 app = Flask(__name__)
 
@@ -32,9 +34,7 @@ def signUp():
         response = make_response(render_template('signUp.html'))
         return response
     return 'Already logged in'
-# token = create_token(payload)    
-# response = make_response(render_template('signUp.html'))
-# response.set_cookie('jwt_token', token, httponly=True, secure=True)    
+ 
 
 @app.route('/signedUp',methods = ['POST'])
 def signedUp():
@@ -79,8 +79,10 @@ def home():
     jwt_token = request.cookies.get('jwt_token')      
     if not jwt_token:        
         return redirect('/login')
-    # to_do_data.find()
-    response = make_response(render_template('home.html'))
+    payload = verify_token(jwt_token)
+    user = to_do_user.find_one({"email":payload["email"]})
+    to_dos = to_do_data.find({"user":user["_id"]})
+    response = make_response(render_template('home.html',todos = list(to_dos)))
     return response
 
 @app.route('/add-toDo',methods=['POST'])
@@ -90,6 +92,41 @@ def add_toDo():
     user = to_do_user.find_one({"email":payload["email"]})
     to_do_data.insert_one({"toDo":todo,"user":user["_id"]})    
     return redirect('/')
+
+
+@app.route('/edit-toDo',methods=['POST'])
+def edit_toDo():
+    jwt_token = request.cookies.get('jwt_token')      
+    if not jwt_token:        
+        return redirect('/login')
+    payload = verify_token(jwt_token)
+    if payload:
+        toDoObject = to_do_data.find({"_id":request.form.get('toDoId')})
+        if toDoObject:     
+            to_do_id = ObjectId(request.form.get('toDoId'))                                                       
+            update_result = to_do_data.update_one({"_id": to_do_id}, {"$set": {"toDo": request.form.get('toDoInput')}})            
+            if update_result.modified_count == 1:
+                return redirect('/')
+            else:
+                return 'some error'
+
+@app.route('/delete-toDo',methods = ['POST'])
+def delete_toDo():
+    jwt_token = request.cookies.get('jwt_token')      
+    if not jwt_token:        
+        return redirect('/login')
+    payload = verify_token(jwt_token)
+    if payload:
+        toDoObject = to_do_data.find({"_id":request.form.get('toDoId')})
+        if toDoObject:     
+            to_do_id = ObjectId(request.form.get('toDoId')) 
+            deleted_data = to_do_data.delete_one({"_id": to_do_id})
+            if deleted_data.deleted_count == 1:
+                return redirect('/')
+            else:
+                return 'some error'
+
+        
 
 if __name__ == '__main__':
     app.run(debug=True)

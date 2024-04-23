@@ -14,7 +14,3 @@ def verify_token(token):
     except Exception as e:
         print('Some error :',e)
 
-    # except jwt.ExpiredSignatureError:
-    #     return 'Signature expired. Please log in again.'
-    # except jwt.InvalidTokenError:
-    #     return 'Invalid token. Please log in again.'
